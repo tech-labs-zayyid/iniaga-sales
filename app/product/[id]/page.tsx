@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Star, ShoppingCart, Heart, Fuel, Calendar, Gauge, Car } from 'lucide-react';
+import Head from 'next/head';
 
 const productData = {
   name: "2024 Mercedes-Benz S-Class S 580",
@@ -105,146 +106,170 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Image Slider */}
-          <div className="relative">
-            <div className="aspect-w-16 aspect-h-9 relative overflow-hidden rounded-lg bg-gray-100">
-              <img
-                src={productData.images[currentImage]}
-                alt={`${productData.name} view ${currentImage + 1}`}
-                className="w-full h-[500px] object-cover"
-              />
-              <button
-                onClick={prevImage}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextImage}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
-            <div className="flex mt-4 gap-4 overflow-x-auto">
-              {productData.images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentImage(idx)}
-                  className={`flex-shrink-0 ${currentImage === idx ? 'ring-2 ring-indigo-500' : ''}`}
-                >
-                  <img
-                    src={img}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="h-20 w-20 object-cover rounded-md"
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
+    <>
+      {/* Meta Tags */}
+      <Head>
+        <title>Eko Toyota - Find Your Dream Car | Best Car Sales</title>
+        <meta name="description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta name="keywords" content="car sales, buy car, best cars, luxury cars, new cars, used cars" />
+        <meta name="author" content="iniaga.id" />
+        
+        {/* Open Graph / Facebook Meta Tags */}
+        <meta property="og:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
+        <meta property="og:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta property="og:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
+        <meta property="og:url" content="https://yourwebsite.com" />
+        <meta property="og:type" content="website" />
 
-          {/* Product Info */}
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">{productData.name}</h1>
-            <div className="mt-4 flex items-center">
-              <p className="text-3xl font-semibold text-gray-900">{formatPrice(productData.price)}</p>
-              <div className="ml-4 flex items-center">
-                <div className="flex items-center text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={20}
-                      fill={i < Math.floor(productData.rating) ? "currentColor" : "none"}
-                      className={i < Math.floor(productData.rating) ? "" : "text-gray-300"}
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
+        <meta name="twitter:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta name="twitter:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
+
+        {/* WhatsApp akan mengambil metadata dari Open Graph */}
+      </Head>
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Image Slider */}
+            <div className="relative">
+              <div className="aspect-w-16 aspect-h-9 relative overflow-hidden rounded-lg bg-gray-100">
+                <img
+                  src={productData.images[currentImage]}
+                  alt={`${productData.name} view ${currentImage + 1}`}
+                  className="w-full h-[500px] object-cover"
+                />
+                <button
+                  onClick={prevImage}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </div>
+              <div className="flex mt-4 gap-4 overflow-x-auto">
+                {productData.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImage(idx)}
+                    className={`flex-shrink-0 ${currentImage === idx ? 'ring-2 ring-indigo-500' : ''}`}
+                  >
+                    <img
+                      src={img}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="h-20 w-20 object-cover rounded-md"
                     />
-                  ))}
-                </div>
-                <span className="ml-2 text-sm text-gray-600">
-                  ({productData.reviews} reviews)
-                </span>
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Quick Highlights */}
-            <div className="mt-6 grid grid-cols-2 gap-4">
-              {productData.description.highlights.map((highlight, idx) => (
-                <div key={idx} className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
-                  {highlight.icon}
-                  <div>
-                    <p className="text-sm text-gray-500">{highlight.label}</p>
-                    <p className="font-medium">{highlight.value}</p>
+            {/* Product Info */}
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">{productData.name}</h1>
+              <div className="mt-4 flex items-center">
+                <p className="text-3xl font-semibold text-gray-900">{formatPrice(productData.price)}</p>
+                <div className="ml-4 flex items-center">
+                  <div className="flex items-center text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={20}
+                        fill={i < Math.floor(productData.rating) ? "currentColor" : "none"}
+                        className={i < Math.floor(productData.rating) ? "" : "text-gray-300"}
+                      />
+                    ))}
                   </div>
+                  <span className="ml-2 text-sm text-gray-600">
+                    ({productData.reviews} reviews)
+                  </span>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <div className="mt-8 space-y-4">
-              <button className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
-                <ShoppingCart size={20} />
-                Schedule Test Drive
-              </button>
-              <button className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
-                <Heart size={20} />
-                Save to Favorites
-              </button>
-            </div>
-
-            <div className="mt-8 space-y-2">
-              <AccordionSection
-                title="Overview"
-                isOpen={openSection === "overview"}
-                onToggle={() => setOpenSection(openSection === "overview" ? "" : "overview")}
-              >
-                <p className="leading-relaxed">{productData.description.overview}</p>
-              </AccordionSection>
-
-              <AccordionSection
-                title="Features"
-                isOpen={openSection === "features"}
-                onToggle={() => setOpenSection(openSection === "features" ? "" : "features")}
-              >
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {productData.description.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center space-x-2">
-                      <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full"></div>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionSection>
-
-              <AccordionSection
-                title="Specifications"
-                isOpen={openSection === "specifications"}
-                onToggle={() => setOpenSection(openSection === "specifications" ? "" : "specifications")}
-              >
-                <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {Object.entries(productData.description.specifications).map(([key, value]) => (
-                    <div key={key} className="bg-gray-50 p-3 rounded-lg">
-                      <dt className="text-sm text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
-                      <dd className="font-medium mt-1">{value}</dd>
+              {/* Quick Highlights */}
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                {productData.description.highlights.map((highlight, idx) => (
+                  <div key={idx} className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
+                    {highlight.icon}
+                    <div>
+                      <p className="text-sm text-gray-500">{highlight.label}</p>
+                      <p className="font-medium">{highlight.value}</p>
                     </div>
-                  ))}
-                </dl>
-              </AccordionSection>
+                  </div>
+                ))}
+              </div>
 
-              <AccordionSection
-                title="Warranty Information"
-                isOpen={openSection === "warranty"}
-                onToggle={() => setOpenSection(openSection === "warranty" ? "" : "warranty")}
-              >
-                <div className="space-y-2 whitespace-pre-line">
-                  {productData.description.warranty}
-                </div>
-              </AccordionSection>
+              <div className="mt-8 space-y-4">
+                <button className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
+                  <ShoppingCart size={20} />
+                  Schedule Test Drive
+                </button>
+                <button className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+                  <Heart size={20} />
+                  Save to Favorites
+                </button>
+              </div>
+
+              <div className="mt-8 space-y-2">
+                <AccordionSection
+                  title="Overview"
+                  isOpen={openSection === "overview"}
+                  onToggle={() => setOpenSection(openSection === "overview" ? "" : "overview")}
+                >
+                  <p className="leading-relaxed">{productData.description.overview}</p>
+                </AccordionSection>
+
+                <AccordionSection
+                  title="Features"
+                  isOpen={openSection === "features"}
+                  onToggle={() => setOpenSection(openSection === "features" ? "" : "features")}
+                >
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {productData.description.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center space-x-2">
+                        <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full"></div>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionSection>
+
+                <AccordionSection
+                  title="Specifications"
+                  isOpen={openSection === "specifications"}
+                  onToggle={() => setOpenSection(openSection === "specifications" ? "" : "specifications")}
+                >
+                  <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {Object.entries(productData.description.specifications).map(([key, value]) => (
+                      <div key={key} className="bg-gray-50 p-3 rounded-lg">
+                        <dt className="text-sm text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
+                        <dd className="font-medium mt-1">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </AccordionSection>
+
+                <AccordionSection
+                  title="Warranty Information"
+                  isOpen={openSection === "warranty"}
+                  onToggle={() => setOpenSection(openSection === "warranty" ? "" : "warranty")}
+                >
+                  <div className="space-y-2 whitespace-pre-line">
+                    {productData.description.warranty}
+                  </div>
+                </AccordionSection>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

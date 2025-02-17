@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Car, User, Phone, Mail, MapPin, Facebook, Instagram, Twitter, ChevronDown } from "lucide-react";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -80,6 +81,28 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {/* Meta Tags */}
+      <Head>
+        <title>Eko Toyota - Find Your Dream Car | Best Car Sales</title>
+        <meta name="description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta name="keywords" content="car sales, buy car, best cars, luxury cars, new cars, used cars" />
+        <meta name="author" content="iniaga.id" />
+        
+        {/* Open Graph / Facebook Meta Tags */}
+        <meta property="og:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
+        <meta property="og:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta property="og:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
+        <meta property="og:url" content="https://yourwebsite.com" />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
+        <meta name="twitter:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta name="twitter:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
+
+        {/* WhatsApp akan mengambil metadata dari Open Graph */}
+      </Head>
       {/* Hero Banner Carousel */}
       <div className="pt-16">
         <div className="relative h-[600px] overflow-hidden">

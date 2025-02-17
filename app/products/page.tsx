@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Filter, X } from "lucide-react"
 import Link from "next/link"
+import Head from "next/head"
 
 export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -75,80 +76,104 @@ export default function Products() {
   )
 
   return (
-    <div className="pt-24 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Semua Produk Toyota</h1>
-          <button
-            onClick={() => setIsMobileFilterOpen(true)}
-            className="lg:hidden flex items-center gap-2 text-gray-600"
-          >
-            <Filter className="h-5 w-5" />
-            Filter
-          </button>
-        </div>
+    <>
+      {/* Meta Tags */}
+      <Head>
+        <title>Eko Toyota - Find Your Dream Car | Best Car Sales</title>
+        <meta name="description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta name="keywords" content="car sales, buy car, best cars, luxury cars, new cars, used cars" />
+        <meta name="author" content="iniaga.id" />
+        
+        {/* Open Graph / Facebook Meta Tags */}
+        <meta property="og:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
+        <meta property="og:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta property="og:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
+        <meta property="og:url" content="https://yourwebsite.com" />
+        <meta property="og:type" content="website" />
 
-        <div className="flex gap-8">
-          {/* Desktop Filter Sidebar */}
-          <div className="hidden lg:block w-64 flex-shrink-0">
-            <div className="sticky top-24">
-              <FilterSection />
-            </div>
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
+        <meta name="twitter:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
+        <meta name="twitter:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
+
+        {/* WhatsApp akan mengambil metadata dari Open Graph */}
+      </Head>
+      <div className="pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-4xl font-bold">Semua Produk Toyota</h1>
+            <button
+              onClick={() => setIsMobileFilterOpen(true)}
+              className="lg:hidden flex items-center gap-2 text-gray-600"
+            >
+              <Filter className="h-5 w-5" />
+              Filter
+            </button>
           </div>
 
-          {/* Mobile Filter Sidebar */}
-          {isMobileFilterOpen && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden">
-              <div className="absolute right-0 top-0 h-full w-64 bg-white p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-lg font-semibold">Filter</h2>
-                  <button
-                    onClick={() => setIsMobileFilterOpen(false)}
-                    className="text-gray-500"
-                  >
-                    <X className="h-6 w-6" />
-                  </button>
-                </div>
+          <div className="flex gap-8">
+            {/* Desktop Filter Sidebar */}
+            <div className="hidden lg:block w-64 flex-shrink-0">
+              <div className="sticky top-24">
                 <FilterSection />
               </div>
             </div>
-          )}
 
-          {/* Product Grid */}
-          <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map(product => (
-                <Card key={product.name} className="overflow-hidden">
-                  <div className="relative h-48">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover"
-                    />
+            {/* Mobile Filter Sidebar */}
+            {isMobileFilterOpen && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden">
+                <div className="absolute right-0 top-0 h-full w-64 bg-white p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-lg font-semibold">Filter</h2>
+                    <button
+                      onClick={() => setIsMobileFilterOpen(false)}
+                      className="text-gray-500"
+                    >
+                      <X className="h-6 w-6" />
+                    </button>
                   </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-semibold">{product.name}</h3>
-                      <span className="bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded">
-                        {product.category}
-                      </span>
+                  <FilterSection />
+                </div>
+              </div>
+            )}
+
+            {/* Product Grid */}
+            <div className="flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map(product => (
+                  <Card key={product.name} className="overflow-hidden">
+                    <div className="relative h-48">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
-                    <p className="text-gray-600 mb-4">{product.description}</p>
-                    <p className="text-blue-600 font-semibold mb-4">{product.price}</p>
-                    <div className="flex gap-4">
-                      <Link href={'/product/1'} className="w-full bg-blue-600 text-center hover:bg-blue-700 text-white px-4 py-2 rounded transition">
-                        Detail
-                      </Link>
-                      <Button variant="outline" className="flex-1">Test Drive</Button>
+                    <div className="p-6">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="text-xl font-semibold">{product.name}</h3>
+                        <span className="bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded">
+                          {product.category}
+                        </span>
+                      </div>
+                      <p className="text-gray-600 mb-4">{product.description}</p>
+                      <p className="text-blue-600 font-semibold mb-4">{product.price}</p>
+                      <div className="flex gap-4">
+                        <Link href={'/product/1'} className="w-full bg-blue-600 text-center hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                          Detail
+                        </Link>
+                        <Button variant="outline" className="flex-1">Test Drive</Button>
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              ))}
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
