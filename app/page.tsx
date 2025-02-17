@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const banners = [
     {
@@ -81,47 +80,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 shadow-sm">
-        <nav className="max-w-5xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <Car className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold">Eko Luxury Car</span>
-            </Link>
-            <div className="space-x-8">
-              <Link href="/" className="hover:text-blue-600 transition">Home</Link>
-              <div className="relative inline-block group">
-                <button
-                  className="flex items-center space-x-1 hover:text-blue-600 transition focus:outline-none"
-                  onClick={() => setDropdownOpen((prev) => !prev)}
-                >
-                  <span>Products</span>
-                  <ChevronDown className="h-4 w-4 transition-transform" style={{ transform: isDropdownOpen ? "rotate(180deg)" : "rotate(0deg)" }} />
-                </button>
-
-                {/* Dropdown dengan animasi */}
-                {isDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute w-48 bg-white shadow-lg rounded-lg mt-2 py-2 z-50"
-                  >
-                    <Link href="/products/suv" className="block px-4 py-2 hover:bg-blue-50">SUV</Link>
-                    <Link href="/products/mpv" className="block px-4 py-2 hover:bg-blue-50">MPV</Link>
-                    <Link href="/products/sedan" className="block px-4 py-2 hover:bg-blue-50">Sedan</Link>
-                    <Link href="/products/hatchback" className="block px-4 py-2 hover:bg-blue-50">Hatchback</Link>
-                  </motion.div>
-                )}
-              </div>
-              <Link href="/gallery" className="hover:text-blue-600 transition">Gallery</Link>
-            </div>
-          </div>
-        </nav>
-      </header>
-
       {/* Hero Banner Carousel */}
       <div className="pt-16">
         <div className="relative h-[600px] overflow-hidden">
@@ -242,9 +200,9 @@ export default function Home() {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                   <p className="text-gray-600 mb-4">{product.price}</p>
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                  <Link href={'/product/1'} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
                     Learn More
-                  </button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -265,7 +223,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Gallery</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
               <motion.div
                 key={item}
                 initial={{ opacity: 0 }}
