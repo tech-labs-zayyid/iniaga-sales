@@ -7,7 +7,32 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Filter, X } from "lucide-react"
 import Link from "next/link"
-import Head from "next/head"
+import { Metadata } from "next";
+
+
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  // const product = await fetch(`https://api.example.com/products/${params.id}`).then((res) => res.json());
+
+  return {
+    title: `Toyota Camry - Buy Now`,
+    description: "Jual Mobil Toyota Camry dengan harga terbaik di Eko Toyota",
+    openGraph: {
+      title: `Toyota Camry - Buy Now`,
+      description: "Jual Mobil Toyota Camry dengan harga terbaik di Eko Toyota",
+      images: ['https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80'],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Toyota Camry - Buy Now`,
+      description: "Jual Mobil Toyota Camry dengan harga terbaik di Eko Toyota",
+      images: ['https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80'],
+    },
+  };
+}
 
 export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -77,28 +102,6 @@ export default function Products() {
 
   return (
     <>
-      {/* Meta Tags */}
-      <Head>
-        <title>Eko Toyota - Find Your Dream Car | Best Car Sales</title>
-        <meta name="description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
-        <meta name="keywords" content="car sales, buy car, best cars, luxury cars, new cars, used cars" />
-        <meta name="author" content="iniaga.id" />
-        
-        {/* Open Graph / Facebook Meta Tags */}
-        <meta property="og:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
-        <meta property="og:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
-        <meta property="og:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
-        <meta property="og:url" content="https://yourwebsite.com" />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Eko Toyota - Find Your Dream Car | Best Car Sales" />
-        <meta name="twitter:description" content="Eko Toyota - Find the best car deals and professional consultation to get your dream vehicle today!" />
-        <meta name="twitter:image" content="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU" />
-
-        {/* WhatsApp akan mengambil metadata dari Open Graph */}
-      </Head>
       <div className="pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
