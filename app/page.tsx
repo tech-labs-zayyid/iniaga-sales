@@ -200,9 +200,15 @@ export default function Home() {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                   <p className="text-gray-600 mb-4">{product.price}</p>
-                  <Link href={'/product/1'} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
-                    Learn More
-                  </Link>
+                  <div>
+                    <Link href={'/product/1'} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                      Tanya Produk
+                    </Link>
+                    <Link href={'/product/1'} className="ml-1 w-full border hover:bg-gray-50 border-gray-300 text-gray-700 px-4 py-2 rounded transition">
+                      Detail
+                    </Link>
+
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -238,9 +244,9 @@ export default function Home() {
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                {/* <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <span className="text-white font-semibold">View Details</span>
-                </div>
+                </div> */}
               </motion.div>
             ))}
           </div>

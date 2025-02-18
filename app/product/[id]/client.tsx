@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Star, ShoppingCart, Heart, Fuel, Calendar, Gauge, Car } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Star, ShoppingCart, Heart, Fuel, Calendar, Gauge, Car, PhoneCall } from 'lucide-react';
 
 const productData = {
   name: "2024 Mercedes-Benz S-Class S 580",
@@ -184,12 +184,12 @@ function ClientProduct() {
 
               <div className="mt-8 space-y-4">
                 <button className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
-                  <ShoppingCart size={20} />
-                  Schedule Test Drive
+                  <Car size={20} />
+                  Minta Test Drive
                 </button>
                 <button className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
-                  <Heart size={20} />
-                  Save to Favorites
+                  <PhoneCall size={20} />
+                  Hubungi Sales
                 </button>
               </div>
 

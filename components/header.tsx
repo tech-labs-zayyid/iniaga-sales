@@ -68,6 +68,7 @@ export default function Header() {
           </div>
 
           <Link href="/gallery" className="hover:text-blue-600 transition py-2 md:py-0">Gallery</Link>
+          <Link href="/register" className="hover:text-blue-600 transition py-2 md:py-0">Register Agen</Link>
         </div>
       </nav>
     </header>
