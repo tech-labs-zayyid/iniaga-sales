@@ -4,13 +4,21 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Car, ChevronDown, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { useDynamicUrl } from "@/lib/geturl";
 
 export default function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const username = pathname.split("/")[1] || "";
 
+  const homeUrl = useDynamicUrl("/");
+  const galleryUrl = useDynamicUrl("/gallery");
+  const registerUrl = useDynamicUrl("/register");
+  const productsUrl = useDynamicUrl("/products");
   // Tutup dropdown ketika pindah halaman
   useEffect(() => {
     setDropdownOpen(false);
@@ -43,10 +51,10 @@ export default function Header() {
 
         {/* Menu */}
         <div className={`md:flex md:items-center md:space-x-8 ${isMenuOpen ? "block" : "hidden"} absolute md:relative top-16 md:top-0 left-0 md:flex-row flex flex-col w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none p-4 md:p-0`}>
-          <Link href="/" className="hover:text-blue-600 transition py-2 md:py-0">Home</Link>
+          <Link href={homeUrl} className="hover:text-blue-600 transition py-2 md:py-0">Home</Link>
 
           {/* Dropdown */}
-          <div className="relative group py-2 md:py-0" ref={dropdownRef}>
+          {/* <div className="relative group py-2 md:py-0" ref={dropdownRef}>
             <button className="flex items-center space-x-1 hover:text-blue-600 transition focus:outline-none" onClick={() => setDropdownOpen((prev) => !prev)}>
               <span>Products</span>
               <ChevronDown className={`h-4 w-4 transition-transform ${isDropdownOpen ? "rotate-180" : "rotate-0"}`} />
@@ -59,16 +67,17 @@ export default function Header() {
                 transition={{ duration: 0.3 }}
                 className="absolute md:w-48 bg-white shadow-lg rounded-lg mt-2 py-2 z-50 md:left-auto left-4 right-4"
               >
-                <Link href="/products?c=SUV" className="block px-4 py-2 hover:bg-blue-50">SUV</Link>
-                <Link href="/products?c=MPV" className="block px-4 py-2 hover:bg-blue-50">MPV</Link>
-                <Link href="/products?c=Sedan" className="block px-4 py-2 hover:bg-blue-50">Sedan</Link>
-                <Link href="/products?c=Hatchback" className="block px-4 py-2 hover:bg-blue-50">Hatchback</Link>
+                <Link href={`/${username}/products?c=SUV`} className="block px-4 py-2 hover:bg-blue-50">SUV</Link>
+                <Link href={`/${username}/products?c=MPV`} className="block px-4 py-2 hover:bg-blue-50">MPV</Link>
+                <Link href={`/${username}/products?c=Sedan`} className="block px-4 py-2 hover:bg-blue-50">Sedan</Link>
+                <Link href={`/${username}/products?c=Hatchback`} className="block px-4 py-2 hover:bg-blue-50">Hatchback</Link>
               </motion.div>
             )}
-          </div>
+          </div> */}
 
-          <Link href="/gallery" className="hover:text-blue-600 transition py-2 md:py-0">Gallery</Link>
-          <Link href="/register" className="hover:text-blue-600 transition py-2 md:py-0">Register Agen</Link>
+          <Link href={productsUrl} className="hover:text-blue-600 transition py-2 md:py-0">Produk</Link>
+          <Link href={galleryUrl} className="hover:text-blue-600 transition py-2 md:py-0">Gallery</Link>
+          <Link href={registerUrl} className="hover:text-blue-600 transition py-2 md:py-0">Register Agen</Link>
         </div>
       </nav>
     </header>

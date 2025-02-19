@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Filter, X } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation";
+import { useDynamicUrl } from "@/lib/geturl";
+
 
 export default function ProductClient() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -15,6 +18,8 @@ export default function ProductClient() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const search = searchParams.get("c")
+  const pathname = usePathname();
+  const username = pathname.split("/")[1] || "";
 
   useEffect(() => {
     setSelectedCategory(search)
@@ -37,11 +42,6 @@ export default function ProductClient() {
 
   const clearCategoryFilter = () => {
     setSelectedCategory(null)
-
-    // Hapus query param `c` dari URL
-    const params = new URLSearchParams(searchParams.toString())
-    params.delete("c")
-    router.replace(`?${params.toString()}`, { scroll: false })
   }
 
   const FilterSection = () => (
@@ -61,7 +61,6 @@ export default function ProductClient() {
             key={category}
             onClick={() => {
               setSelectedCategory(category)
-              router.replace(`?c=${category}`, { scroll: false }) // Update query param
             }}
             className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
               selectedCategory === category ? "bg-blue-600 text-white" : "hover:bg-gray-100"
@@ -138,7 +137,7 @@ export default function ProductClient() {
                       <p className="text-gray-600 mb-4">{product.description}</p>
                       <p className="text-blue-600 font-semibold mb-4">{product.price}</p>
                       <div className="flex gap-4">
-                        <Link href={'/product/1'} className="w-full bg-blue-600 text-center hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                        <Link href={useDynamicUrl('/product', '1')} className="w-full bg-blue-600 text-center hover:bg-blue-700 text-white px-4 py-2 rounded transition">
                           Detail
                         </Link>
                         <Button variant="outline" className="flex-1">Test Drive</Button>
