@@ -11,7 +11,7 @@ const Gallery: React.FC = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get('https://54da-114-10-148-9.ngrok-free.app/sales/gallery');
+        const response = await axios.get('http://apiniaga.zayyid.com/public/gallery/dhani');
         if (response.data.status === "success" && response.data.data) {
           setImages(response.data.data.data_list.map((item: any) => ({
             id: item.id_gallery,
