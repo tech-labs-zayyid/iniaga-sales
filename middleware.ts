@@ -22,8 +22,9 @@ export function middleware(req: NextRequest) {
   }
 
   // Jika domain utama (profile.id atau localhost tanpa username), biarkan tetap di halaman utama
-  if (host === "airshare.web.id" || host === "localhost:3000") {
-    return NextResponse.next();
+  // if (host === "airshare.web.id" || host === "localhost:3000") {
+  if (host === "airshare.web.id") {
+    return NextResponse.redirect("https://iniaga.vercel.app");
   }
 
   // Jika ada subdomain valid, arahkan ke dynamic route [username]
