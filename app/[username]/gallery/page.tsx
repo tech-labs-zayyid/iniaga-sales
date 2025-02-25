@@ -4,14 +4,14 @@ import axios from 'axios';
 import GalleryCard from '@/components/gallerycard';
 import { ImageIcon, Car } from 'lucide-react';
 
-const Gallery: React.FC = () => {
+export default function Gallery({ params }: { params: { username: string } }) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get('http://apiniaga.zayyid.com/public/gallery/dhani');
+        const response = await axios.get(`https://apiniaga.zayyid.com/public/gallery/${params.username}`);
         if (response.data.status === "success" && response.data.data) {
           setImages(response.data.data.data_list.map((item: any) => ({
             id: item.id_gallery,
@@ -61,5 +61,3 @@ const Gallery: React.FC = () => {
     </div>
   );
 };
-
-export default Gallery;
