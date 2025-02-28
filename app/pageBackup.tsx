@@ -5,10 +5,12 @@ import { Car, User, Phone, Mail, MapPin, Facebook, Instagram, Twitter, ChevronDo
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useDynamicUrl } from "@/lib/geturl";
 
-export default function Home() {
+export default function Home({ params }: { params: { username: string } }) {
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const productsUrl = useDynamicUrl("/products");
+  const productUrl = useDynamicUrl("/product");
   const banners = [
     {
       image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070&auto=format&fit=crop",
@@ -151,7 +153,7 @@ export default function Home() {
               />
             </motion.div>
             <div>
-              <h2 className="text-3xl font-bold mb-6">Your Trusted Car Sales Consultant</h2>
+              <h2 className="text-3xl font-bold mb-6">{(params.username).toUpperCase()} Your Trusted Car Sales Consultant</h2>
               <p className="text-gray-600 mb-6">
                 With over 10 years of experience in the automotive industry, I am committed to providing
                 the best service and finding the perfect vehicle that matches your needs and budget.
@@ -201,10 +203,10 @@ export default function Home() {
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                   <p className="text-gray-600 mb-4">{product.price}</p>
                   <div>
-                    <Link href={'/product/1'} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                    <Link href={useDynamicUrl("/product", '1')} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
                       Tanya Produk
                     </Link>
-                    <Link href={'/product/1'} className="ml-1 w-full border hover:bg-gray-50 border-gray-300 text-gray-700 px-4 py-2 rounded transition">
+                    <Link href={useDynamicUrl("/product", '2')} className="ml-1 w-full border hover:bg-gray-50 border-gray-300 text-gray-700 px-4 py-2 rounded transition">
                       Detail
                     </Link>
 
@@ -215,7 +217,7 @@ export default function Home() {
           </div>
           <div className="text-center mt-12">
             <Link
-              href="/products"
+              href={productsUrl}
               className="inline-block bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded-full transition"
             >
               View All Products

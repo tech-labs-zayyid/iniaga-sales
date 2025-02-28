@@ -1,136 +1,84 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Car, User, Phone, Mail, MapPin, Facebook, Instagram, Twitter, ChevronDown } from "lucide-react";
+import { Car, User, Phone, Mail, MapPin, Facebook, Instagram, Twitter, ChevronDown, YoutubeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useDynamicUrl } from "@/lib/geturl";
+import axios from "axios";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 export default function Home({ params }: { params: { username: string } }) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<any>(null);
+  const [banners, setBanners] = useState<any[]>([]);
   const productsUrl = useDynamicUrl("/products");
   const productUrl = useDynamicUrl("/product");
-  const banners = [
-    {
-      image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070&auto=format&fit=crop",
-      title: "Find Your Dream Car Today",
-      subtitle: "Professional car sales consultant ready to help you find the perfect vehicle"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2066&auto=format&fit=crop",
-      title: "Exclusive Deals Available",
-      subtitle: "Get the best prices on your favorite car models"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=2070&auto=format&fit=crop",
-      title: "Premium Selection",
-      subtitle: "Explore our curated collection of luxury vehicles"
-    }
-  ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % banners.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    axios.get(`https://apiniaga.zayyid.com/public/home/${params.username}`)
+        .then((response) => {
+            if (response.data.status === "success") {
+                setData(response.data.data);
+                setBanners(response.data.data.banner || []);
+            } else {
+                setError("Gagal mengambil data.");
+            }
+            setLoading(false);
+        })
+        .catch((err) => {
+            setError(err.message);
+            setLoading(false);
+        });
   }, []);
-
-  const products = [
-    {
-      id: 1,
-      name: "Toyota Fortuner",
-      price: "Rp 589.000.000",
-      image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=2156&auto=format&fit=crop"
-    },
-    {
-      id: 2,
-      name: "Honda CR-V",
-      price: "Rp 489.000.000",
-      image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=2070&auto=format&fit=crop"
-    },
-    {
-      id: 3,
-      name: "Mitsubishi Xpander",
-      price: "Rp 289.000.000",
-      image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=2070&auto=format&fit=crop"
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "John Doe",
-      comment: "Pelayanan sangat memuaskan dan proses cepat!",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
-    },
-    {
-      name: "Jane Smith",
-      comment: "Sales yang sangat profesional dan informatif",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop"
-    },
-    {
-      name: "John Doe",
-      comment: "Pelayanan sangat memuaskan dan proses cepat!",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
-    },
-    {
-      name: "Jane Smith",
-      comment: "Sales yang sangat profesional dan informatif",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop"
-    }
-  ];
 
   return (
     <div className="min-h-screen">
       {/* Hero Banner Carousel */}
       <div className="pt-16">
         <div className="relative h-[600px] overflow-hidden">
-          {banners.map((banner, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: currentSlide === index ? 1 : 0,
-                x: currentSlide === index ? 0 : (currentSlide > index ? -100 : 100)
-              }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0"
+          {banners.length > 0 ? (
+            <Swiper
+              modules={[Autoplay, Pagination, Navigation]}
+              spaceBetween={10}
+              slidesPerView={1}
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              pagination={{ clickable: true }}
+              navigation
+              loop
+              className="h-full"
             >
-              <Image
-                src={banner.image}
-                alt={banner.title}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent">
-                <div className="max-w-5xl mx-auto px-4 h-full flex items-center">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: currentSlide === index ? 1 : 0, y: currentSlide === index ? 0 : 20 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="max-w-2xl text-white"
-                  >
-                    <h1 className="text-5xl font-bold mb-4">{banner.title}</h1>
-                    <p className="text-xl mb-8">{banner.subtitle}</p>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full transition">
-                      Contact Us
-                    </button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            {banners.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  currentSlide === index ? 'bg-blue-600 w-6' : 'bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
+              {banners.map((banner, index) => (
+                <SwiperSlide key={index}>
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={banner.image}
+                      alt={banner.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-center px-6">
+                      <div className="max-w-3xl">
+                        <h1 className="text-4xl font-bold">{banner.title}</h1>
+                        <p className="text-lg mt-2">{banner.subtitle}</p>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className="h-full bg-gray-200 flex items-center justify-center">
+              <p className="text-gray-500">No banners available</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -153,23 +101,20 @@ export default function Home({ params }: { params: { username: string } }) {
               />
             </motion.div>
             <div>
-              <h2 className="text-3xl font-bold mb-6">{(params.username).toUpperCase()} Your Trusted Car Sales Consultant</h2>
+              <h2 className="text-3xl font-bold mb-6">{data?.fullname || ''}</h2>
               <p className="text-gray-600 mb-6">
-                With over 10 years of experience in the automotive industry, I am committed to providing
-                the best service and finding the perfect vehicle that matches your needs and budget.
+                {
+                  data?.desc || ''
+                }
               </p>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
-                  <User className="text-blue-600" />
-                  <span>Professional and experienced</span>
-                </div>
-                <div className="flex items-center space-x-3">
                   <Phone className="text-blue-600" />
-                  <span>24/7 customer support</span>
+                  <span>{data?.phone_number || ''}</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="text-blue-600" />
-                  <span>Quick response time</span>
+                  <span>{data?.email || ''}</span>
                 </div>
               </div>
             </div>
@@ -181,40 +126,46 @@ export default function Home({ params }: { params: { username: string } }) {
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Best Product</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden group"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.price}</p>
-                  <div>
-                    <Link href={useDynamicUrl("/product", '1')} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
-                      Tanya Produk
-                    </Link>
-                    <Link href={useDynamicUrl("/product", '2')} className="ml-1 w-full border hover:bg-gray-50 border-gray-300 text-gray-700 px-4 py-2 rounded transition">
-                      Detail
-                    </Link>
+            {data?.product?.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {data?.product?.map((product: any) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="bg-white rounded-lg shadow-lg overflow-hidden group"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                      <p className="text-gray-600 mb-4">{product.price}</p>
+                      <div>
+                        <Link href={useDynamicUrl("/product", '1')} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                          Tanya Produk
+                        </Link>
+                        <Link href={useDynamicUrl("/product", '2')} className="ml-1 w-full border hover:bg-gray-50 border-gray-300 text-gray-700 px-4 py-2 rounded transition">
+                          Detail
+                        </Link>
 
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-200 flex items-center justify-center h-60 rounded-md">
+                <p className="text-gray-500">No Product available</p>
+              </div>
+            )}
           <div className="text-center mt-12">
             <Link
               href={productsUrl}
@@ -230,28 +181,31 @@ export default function Home({ params }: { params: { username: string } }) {
       <section className="py-20 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Gallery</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="relative h-64 group overflow-hidden rounded-lg"
-              >
-                <Image
-                  src={`https://images.unsplash.com/photo-1557305089-5da8109b753b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
-                  alt={`Gallery ${item}`}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                {/* <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-white font-semibold">View Details</span>
-                </div> */}
-              </motion.div>
-            ))}
-          </div>
+            {data?.gallery?.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {data?.gallery?.map((item: any) => (
+                  <motion.div
+                    key={item.id_gallery}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="relative h-64 group overflow-hidden rounded-lg"
+                  >
+                    <Image
+                      src={`${item.image_url}`}
+                      alt={`Gallery`}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-200 flex items-center justify-center h-60 rounded-md">
+                <p className="text-gray-500">No Gallery available</p>
+              </div>
+            )}
         </div>
       </section>
 
@@ -259,43 +213,49 @@ export default function Home({ params }: { params: { username: string } }) {
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Customer Testimonials</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="bg-white p-6 rounded-lg shadow-lg"
-              >
-                <div className="flex items-center space-x-4 mb-4">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <h3 className="font-semibold">{testimonial.name}</h3>
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <svg
-                          key={i}
-                          className="w-4 h-4 fill-current"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                        </svg>
-                      ))}
+            {data?.testimony?.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {data?.testimony?.map((testimonial: any, index: any) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="bg-white p-6 rounded-lg shadow-lg"
+                  >
+                    <div className="flex items-center space-x-4 mb-4">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        width={50}
+                        height={50}
+                        className="rounded-full"
+                      />
+                      <div>
+                        <h3 className="font-semibold">{testimonial.name}</h3>
+                        <div className="flex text-yellow-400">
+                          {[...Array(5)].map((_, i) => (
+                            <svg
+                              key={i}
+                              className="w-4 h-4 fill-current"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <p className="text-gray-600">{testimonial.comment}</p>
-              </motion.div>
-            ))}
-          </div>
+                    <p className="text-gray-600">{testimonial.comment}</p>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-200 flex items-center justify-center h-60 rounded-md">
+                <p className="text-gray-500">No Gallery available</p>
+              </div>
+            )}
         </div>
       </section>
 
@@ -306,21 +266,23 @@ export default function Home({ params }: { params: { username: string } }) {
             <div>
               <div className="flex items-center space-x-2 mb-6">
                 <Car className="h-8 w-8 text-blue-400" />
-                <span className="text-xl font-bold">AutoPro Sales</span>
+                <span className="text-xl font-bold">{data?.fullname || ''}</span>
               </div>
               <p className="text-gray-400 mb-6">
-                Your trusted partner in finding the perfect vehicle for your needs.
+                {data?.desc || ''}
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition">
-                  <Facebook className="h-6 w-6" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition">
-                  <Instagram className="h-6 w-6" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-blue-400 transition">
-                  <Twitter className="h-6 w-6" />
-                </a>
+                {
+                  data?.social_media?.map((itm:any) => {
+                    if(itm?.social_media_name === 'youtube'){
+                      return(
+                        <Link target="_blank" href={itm?.link_embed} className="text-gray-400 hover:text-blue-400 transition">
+                          <YoutubeIcon className="h-6 w-6" />
+                        </Link>
+                      )
+                    }
+                  })
+                }
               </div>
             </div>
             <div>
