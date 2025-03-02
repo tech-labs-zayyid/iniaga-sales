@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 
 export default function Home({ params }: { params: { username: string } }) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
   const [banners, setBanners] = useState<any[]>([]);
@@ -59,17 +59,17 @@ export default function Home({ params }: { params: { username: string } }) {
                 <SwiperSlide key={index}>
                   <div className="relative w-full h-full">
                     <Image
-                      src={banner.image}
-                      alt={banner.title}
+                      src={banner.image_url}
+                      alt={banner.description}
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-center px-6">
+                    {/* <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-center px-6">
                       <div className="max-w-3xl">
-                        <h1 className="text-4xl font-bold">{banner.title}</h1>
+                        <h1 className="text-4xl font-bold">{banner.description}</h1>
                         <p className="text-lg mt-2">{banner.subtitle}</p>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </SwiperSlide>
               ))}
@@ -93,7 +93,7 @@ export default function Home({ params }: { params: { username: string } }) {
               viewport={{ once: true }}
             >
               <Image
-                src="https://media.licdn.com/dms/image/v2/C5603AQHrVI9o3JZw4w/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1592757080803?e=2147483647&v=beta&t=6cWMwY2THK1cR77yfFRa_cB69xhy3bOAow6D9n6D0yU"
+                src={data?.url_image}
                 alt="Sales Profile"
                 width={300}
                 height={300}
@@ -146,15 +146,15 @@ export default function Home({ params }: { params: { username: string } }) {
                       />
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                      <h3 className="text-xl font-semibold mb-2">{product.product_name}</h3>
                       <p className="text-gray-600 mb-4">{product.price}</p>
                       <div>
-                        <Link href={useDynamicUrl("/product", '1')} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                        {/* <Link href={useDynamicUrl("/product", '1')} className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
                           Tanya Produk
                         </Link>
                         <Link href={useDynamicUrl("/product", '2')} className="ml-1 w-full border hover:bg-gray-50 border-gray-300 text-gray-700 px-4 py-2 rounded transition">
                           Detail
-                        </Link>
+                        </Link> */}
 
                       </div>
                     </div>
@@ -226,7 +226,7 @@ export default function Home({ params }: { params: { username: string } }) {
                   >
                     <div className="flex items-center space-x-4 mb-4">
                       <Image
-                        src={testimonial.image}
+                        src={testimonial.photo_url}
                         alt={testimonial.name}
                         width={50}
                         height={50}
@@ -247,13 +247,13 @@ export default function Home({ params }: { params: { username: string } }) {
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600">{testimonial.comment}</p>
+                    <p className="text-gray-600">{testimonial.description}</p>
                   </motion.div>
                 ))}
               </div>
             ) : (
               <div className="bg-gray-200 flex items-center justify-center h-60 rounded-md">
-                <p className="text-gray-500">No Gallery available</p>
+                <p className="text-gray-500">No Testimoni available</p>
               </div>
             )}
         </div>
@@ -262,7 +262,7 @@ export default function Home({ params }: { params: { username: string } }) {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div>
               <div className="flex items-center space-x-2 mb-6">
                 <Car className="h-8 w-8 text-blue-400" />
@@ -318,17 +318,6 @@ export default function Home({ params }: { params: { username: string } }) {
                   <span className="text-gray-400">Jakarta, Indonesia</span>
                 </div>
               </div>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold mb-4">Working Hours</h3>
-              <ul className="space-y-3 text-gray-400">
-                <li>Monday - Friday</li>
-                <li className="pl-4">9:00 AM - 6:00 PM</li>
-                <li>Saturday</li>
-                <li className="pl-4">9:00 AM - 3:00 PM</li>
-                <li>Sunday</li>
-                <li className="pl-4">Closed</li>
-              </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8">

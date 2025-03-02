@@ -1,5 +1,4 @@
 "use client";
-
 import { usePathname, useSearchParams } from "next/navigation";
 
 export function useDynamicUrl(path: string, appendPath: string = "") {
